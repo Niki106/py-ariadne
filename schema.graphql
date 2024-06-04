@@ -1,0 +1,54 @@
+type User {
+    id: ID! # This is the id of the user
+    email: String! # This is the email of the user
+    password: String! # This is the password of the user
+}
+
+type blog {
+    id: ID! # This is the id of the blog
+    title: String! # This is the title of the blog
+    description: String! # This is the description of the blog
+    completed: Boolean! # This is the completed status of the blog
+    ownerId: ID! # This is the id of the owner of the blog
+}
+
+type blogResult {
+    errors: [String] # This is the list of errors
+    blog: blog # This is the blog
+}
+
+type blogsResult {
+    errors: [String]
+    blogs: [blog] # This is the list of blogs
+}
+
+type InsertResult {
+    errors: [String]
+    id: ID # This is the id of the inserted blog
+}
+
+type TokenResult {
+    errors: [String]
+    token: String # This is the token
+}
+
+schema {
+    query: Query # This is the query type
+    mutation: Mutation # This is the mutation type
+    subscription: Subscription # This is the subscription type
+}
+
+type Query {
+    blogs: blogsResult! # This is the list of blogs
+    blog(blogId: ID!): blogResult! # This is the blog
+}
+
+type Mutation {
+    createblog(title: String!, description: String!): InsertResult! # This is the blog
+    createUser(email: String!, password: String!): InsertResult! # This is the user
+    createToken(email: String!, password: String!): TokenResult! # This is the token
+}
+
+type Subscription {
+    reviewblog(token:String!): InsertResult! # This is the blog
+}
